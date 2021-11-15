@@ -389,7 +389,7 @@ input:focus, textarea:focus, select:focus{
 	}
 
 	.msg-page {
-		height: 330px !important;
+		height: 500px !important; /*330*/
 		overflow-y: auto;
 	}
 }
