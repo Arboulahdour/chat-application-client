@@ -45,7 +45,7 @@ function Copyright() {
   return (
     <Typography variant="body2" align="center" className={classe.fontStyle}>
       {'Copyright © '}
-      <a color="inherit" href="https://chatin.netlify.app/">
+      <a color="inherit" href="https://chatino.netlify.app/">
         chatIn
       </a>{' '}
       {new Date().getFullYear()}

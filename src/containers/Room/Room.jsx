@@ -567,7 +567,7 @@ const Room = (props) => {
             <div className={homeBoxAnimation} style={homeBox}>
               <div className="home-box">
                 <h1>Room's Id ✔️:<span style={{color: '#aaacb2'}}> {room}</span></h1>
-                <h1>You can share the following link of this room 🌐 :<a href={`https://chatin.netlify.app/room?id=${room}`} style={{textDecoration: 'underline'}} target="blanc"> https://chatin.netlify.app/room?id={room}</a></h1>
+                <h1>You can share the following link of this room 🌐 :<a href={`https://chatino.netlify.app/room?id=${room}`} style={{textDecoration: 'underline'}} target="blanc"> https://chatino.netlify.app/room?id={room}</a></h1>
               </div>
             </div>
             <div style={chatBox} className={chatBoxAnimation}>        

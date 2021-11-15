@@ -152,7 +152,7 @@ function HomeForm(props) {
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label className="form-labels">Room's link to join 👇:</Form.Label>
             <br/><br/>
-            <a style={{fontSize: '16px', textDecoration: 'underline'}} href={`https://chatin.netlify.app/room?id=${room}`} target="blanc">https://chatin.netlify.app/room?id=${room}</a>
+            <a style={{fontSize: '16px', textDecoration: 'underline'}} href={`https://chatino.netlify.app/room?id=${room}`} target="blanc">https://chatino.netlify.app/room?id=${room}</a>
             <br/>    
           </Form.Group>
         </Col>
