@@ -6,8 +6,9 @@ import ChatMessage from '../ChatMessage/ChatMessage';
 import ChatImageFile from '../ChatFile/ChatImageFile';
 import ChatVideoFile from '../ChatFile/ChatVideoFile';
 import ChatDocumentFile from '../ChatFile/ChatDocumentFile';
+import spinner from '../../assets/icons/spinner.gif';
 
-const ChatBox = ({ room, messages, name, setMessage, sendMessage, message, selectFile }) => {
+const ChatBox = ({ room, messages, sending, name, setMessage, sendMessage, message, selectFile }) => {
 	  
     const getImage = () => {
       document.getElementById("upImage").click();
@@ -93,11 +94,17 @@ const ChatBox = ({ room, messages, name, setMessage, sendMessage, message, selec
                     name="message"
                     autocomplete="off"
                     onChange={({ target: { value } }) => setMessage(value)}
-                    onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null} 
+                    onKeyPress={event => event.key === 'Enter' && sending === false ? sendMessage(event) : null} 
                   />
-                <div class="input-group-append">
-                  <span class="input-group-text" onClick={e => sendMessage(e)}><i class="fa fa-paper-plane fa-lg"></i></span>
-                </div>
+                {sending ? (
+                  <div class="input-group-append">
+                    <span class="input-group-text"><img src={spinner} height="25px" width="25px" style={{marginLeft: "7px", marginTop: "3px"}} alt="spinner" /></span>
+                  </div>
+                ) : (
+                  <div class="input-group-append">
+                    <span class="input-group-text" onClick={e => sendMessage(e)}><i class="fa fa-paper-plane fa-lg"></i></span>
+                  </div>
+                )}  
                 <input 
                     type="file"
                     id="upImage"
@@ -121,7 +128,7 @@ const ChatBox = ({ room, messages, name, setMessage, sendMessage, message, selec
                     target="TooltipImage" 
                     toggle={toggleImage}
                   >
-                  image
+                  image (max 2MB)
                 </Tooltip> 
                 <input 
                     type="file"
@@ -146,7 +153,7 @@ const ChatBox = ({ room, messages, name, setMessage, sendMessage, message, selec
                     target="TooltipVideo" 
                     toggle={toggleVideo}
                   >
-                  video
+                  video (max 20MB)
                 </Tooltip>
                 <input 
                     type="file"
@@ -171,7 +178,7 @@ const ChatBox = ({ room, messages, name, setMessage, sendMessage, message, selec
                     target="TooltipFile" 
                     toggle={toggleFile}
                   >
-                  File
+                  File (max 10MB)
                 </Tooltip>
               </div>
             </div>

@@ -45,6 +45,8 @@ import chatting from "../../assets/icons/chatting.svg";
 
 const APIEndpoint = process.env.REACT_APP_APIENDPOINT;
 
+// const APIEndpoint = "http://localhost:5000"
+
 let socket;
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -97,6 +99,8 @@ const Room = (props) => {
     disabled: '',
     error: 'none'
   });
+
+  const [sending, setSending] = useState(false)
 
   const query = new URLSearchParams(useLocation().search);
 
@@ -293,9 +297,55 @@ const Room = (props) => {
   }, [props]);
 
   const selectFile = (event) => {
+    
+    const handleUploadErrorNotif = () => {
+      store.addNotification({
+        title: "Error:",
+        message: "The size of this file exceeds the defined max size !",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeInRight"],
+        animationOut: ["animate__animated", "animate__fadeOutRight"],
+        dismiss: {
+          duration: 4000,
+          onScreen: true,
+          showIcon: true,
+        },
+        width: 270
+      });
+    }
     if (event.target.files[0]){
-      setMessage(event.target.files[0].name);
-      setFile(event.target.files[0]);  
+      if (event.target.files[0].type === "image/gif" || event.target.files[0].type === "image/png" || event.target.files[0].type === "image/jpeg" || event.target.files[0].type === "image/bmp" || event.target.files[0].type === "image/tif") {
+        if (event.target.files[0].size < 2097152) {
+          console.log('the file size is :', event.target.files[0].size)
+          console.log('the file type is :', event.target.files[0].type)
+          setMessage(event.target.files[0].name);
+          setFile(event.target.files[0]);
+        } else {
+          setMessage('');
+          handleUploadErrorNotif()  
+        }
+      } else if (event.target.files[0].type === "video/mp4" || event.target.files[0].type === "video/webm") {
+        if (event.target.files[0].size < 20971520) {
+          console.log('the file size is :', event.target.files[0].size)
+          console.log('the file type is :', event.target.files[0].type)
+          setMessage(event.target.files[0].name);
+          setFile(event.target.files[0]);
+        } else {
+          setMessage('');
+          handleUploadErrorNotif()
+        }
+      } else if (event.target.files[0].type === "application/pdf" && event.target.files[0].size < 10485760) {
+        console.log('the file size is :', event.target.files[0].size)
+        console.log('the file type is :', event.target.files[0].type)
+        setMessage(event.target.files[0].name);
+        setFile(event.target.files[0]);
+      } else {
+        setMessage('');
+        handleUploadErrorNotif()
+      }
+        
     } else {
       setMessage('');
     }
@@ -472,6 +522,7 @@ const Room = (props) => {
     }*/
 
     if(file) {
+      setSending(true);
       const messageObject = {
           type: "file",
           text: file,
@@ -480,7 +531,8 @@ const Room = (props) => {
         }
       socket.emit('sendMessage', messageObject, () => {
         setMessage('');
-        setFile()
+        setFile();
+        setSending(false)
       });
     } else if(message) {
       const messageObject = {
@@ -499,7 +551,7 @@ const Room = (props) => {
   const menu = (
     <Menu theme="dark" style={{marginTop: '35px'}}>
       {users.map(({name}, index) => (
-          <Menu.Item key={index}>{name}</Menu.Item>
+          <Menu.Item key={index}><img src="https://nanuntio.com/wp-content/uploads/2020/03/service_default_avatar_182956.png" className="user-picture ml" alt="user"/> {name}</Menu.Item>
       ))}
     </Menu>
   );
@@ -518,7 +570,7 @@ const Room = (props) => {
             </Menu.Item>          
             <SubMenu key="sub1" icon={<TeamOutlined />} title="Connected People">
               {users.map(({name}, index) => (
-              <Menu.Item className="sideBar-submenu" key={index + 5}>{name}</Menu.Item>
+              <Menu.Item className="sideBar-submenu" key={index + 8}><img src="https://nanuntio.com/wp-content/uploads/2020/03/service_default_avatar_182956.png" className="user-picture ml" alt="user" /> {name}</Menu.Item>
               ))}
             </SubMenu>         
             <Menu.Item key="3" icon={<WechatOutlined />} onClick={openChatBox}>
@@ -530,7 +582,7 @@ const Room = (props) => {
             {/* <Menu.Item key="5" icon={<YoutubeOutlined />} onClick={openYoutubeVideo}>
               <span>Youtube</span>
             </Menu.Item> */}
-            <Menu.Item key="6" icon={<LogoutOutlined />}>
+            <Menu.Item key="5" icon={<LogoutOutlined />}>
               <a href='/'>Exit</a>
             </Menu.Item>
           </Menu>
@@ -571,7 +623,7 @@ const Room = (props) => {
               </div>
             </div>
             <div style={chatBox} className={chatBoxAnimation}>        
-              <ChatBox room={room} messages={messages} name={name} message={message} setMessage={setMessage} sendMessage={sendMessage} selectFile={selectFile} />
+              <ChatBox room={room} messages={messages} name={name} message={message} sending={sending} setMessage={setMessage} sendMessage={sendMessage} selectFile={selectFile} />
             </div>
             <div style={whiteBoard} className={whiteBoardAnimation}>
               <div className="page-content-board">

@@ -19,11 +19,11 @@ const ChatImageFile = ({ message, name }) => {
     isSentByCurrentUser
       ? (
         <div className="messageContainer justifyEnd">
-          <p className="sentText pr-10">{trimmedName} {message.time}</p>
+          <p className="sentText">{trimmedName} {message.time}</p>
           <a href={url} target='_blanc' className="messageBoxMedia justifyEnd">
               <Image fileName={message.fileName} blob={blob} />
           </a>
-          <img src="https://cdn3.iconfinder.com/data/icons/login-6/512/LOGIN-10-512.png" className="user-picture mr" />
+          <img src="https://icon2.cleanpng.com/20180331/ffe/kisspng-computer-icons-user-clip-art-user-5abf13dad7aed4.5909364715224718988835.jpg" className="user-picture mr" />
         </div>
         ) : (
         <div className="messageContainer justifyStart">
@@ -31,7 +31,7 @@ const ChatImageFile = ({ message, name }) => {
           <a href={url} target='_blanc' className="messageBoxMedia justifyStart">
             <Image fileName={message.fileName} blob={blob} />
           </a>
-          <p className="sentText pl-10 ">{message.time} {message.user}</p>
+          <p className="sentText">{message.time} {message.user}</p>
         </div>
         )
   );

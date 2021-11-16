@@ -24,7 +24,7 @@ const ChatDocumentFile = ({ message, name }) => {
           <div className="messageBox backgroundBlue">
               <a className="messageText colorWhite document-text" href={url} target="_blanc">{message.fileName}</a>
           </div>
-          <img src="https://cdn3.iconfinder.com/data/icons/login-6/512/LOGIN-10-512.png" className="user-picture mr" />
+          <img src="https://icon2.cleanpng.com/20180331/ffe/kisspng-computer-icons-user-clip-art-user-5abf13dad7aed4.5909364715224718988835.jpg" className="user-picture mr" />
         </div>
         ) : (
         <div className="messageContainer justifyStart">
